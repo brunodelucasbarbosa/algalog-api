@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
       campos.add(new Error.Campo(nomeError, mensagem));
     }
 
-    Error error = new Error(status.value(), LocalDateTime.now(), "Um ou mais campos estão inválidos.", campos);
+    Error error = new Error(status.value(), OffsetDateTime.now(), "Um ou mais campos estão inválidos.", campos);
     return handleExceptionInternal(ex, error, headers, status, request);
   }
 
@@ -41,7 +42,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   public ResponseEntity<Object> handleNegocio(NegocioException ex, WebRequest request) {
     HttpStatus status = HttpStatus.BAD_REQUEST;
 
-    Error error = new Error(status.value(), LocalDateTime.now(), ex.getMessage());
+    Error error = new Error(status.value(), OffsetDateTime.now(), ex.getMessage());
 
     return handleExceptionInternal(ex, error, new HttpHeaders(), status, request);
   }

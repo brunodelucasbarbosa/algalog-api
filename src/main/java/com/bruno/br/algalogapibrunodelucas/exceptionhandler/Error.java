@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -16,12 +17,12 @@ import java.util.List;
 public class Error {
 
   private Integer status;
-  private LocalDateTime data;
+  private OffsetDateTime data;
   private String titulo;
 
   private List<Campo> campos;
 
-  public Error(Integer status, LocalDateTime data, String titulo) {
+  public Error(Integer status, OffsetDateTime data, String titulo) {
     this.status = status;
     this.data = data;
     this.titulo = titulo;
