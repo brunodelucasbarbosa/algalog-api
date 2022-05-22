@@ -7,6 +7,7 @@ import com.bruno.br.algalogapibrunodelucas.dto.input.EntregaInputModel;
 import com.bruno.br.algalogapibrunodelucas.mapper.EntregaAssembler;
 import com.bruno.br.algalogapibrunodelucas.model.Entrega;
 import com.bruno.br.algalogapibrunodelucas.repository.EntregaRepository;
+import com.bruno.br.algalogapibrunodelucas.services.FinalizacaoEntregaService;
 import com.bruno.br.algalogapibrunodelucas.services.SolicitacaoEntregaService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -24,6 +25,7 @@ public class EntregaController {
   private SolicitacaoEntregaService solicitacaoEntregaService;
   private EntregaRepository entregaRepository;
   private EntregaAssembler entregaAssembler;
+  private FinalizacaoEntregaService finalizacaoEntregaService;
 
   @PostMapping("/entregas")
   @ResponseStatus(HttpStatus.CREATED)
@@ -49,5 +51,11 @@ public class EntregaController {
               return ResponseEntity.ok(entregaModel);
             })
             .orElse(ResponseEntity.notFound().build());
+  }
+
+  @PutMapping("/entregas/{entregaId}/finalizar")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void finalizar(@PathVariable Long entregaId) {
+    finalizacaoEntregaService.finalizar(entregaId);
   }
 }

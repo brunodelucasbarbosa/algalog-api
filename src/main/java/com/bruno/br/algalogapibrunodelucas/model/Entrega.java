@@ -1,5 +1,6 @@
 package com.bruno.br.algalogapibrunodelucas.model;
 
+import com.bruno.br.algalogapibrunodelucas.exceptionhandler.NegocioException;
 import com.bruno.br.algalogapibrunodelucas.validation.ValidationGroups;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
@@ -65,5 +66,14 @@ public class Entrega {
 
     this.getOcorrencias().add(ocorrencia);
     return ocorrencia;
+  }
+
+  public void finalizar() {
+    if(!StatusEntrega.PENDENTE.equals(getStatus())) {
+      throw new NegocioException("Entrega não pode ser finalizada");
+    }
+
+    setStatus(StatusEntrega.FINALIZADA);
+    setDataFinalizacao(OffsetDateTime.now());
   }
 }
